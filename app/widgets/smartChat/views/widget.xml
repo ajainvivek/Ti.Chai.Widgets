@@ -1,0 +1,25 @@
+<Alloy>
+	<ScrollView id="heroContainer">
+		<View id="messagesContainer">
+			<TableView id="messages">
+				<!-- <TableViewRow class="messageRow">
+					<View class="outerBubble">
+						<View class="bubble bubbleBot">
+							<Label text="Hi Ajain!!! Welcome to this session!!!" class="message messageBot"></Label>
+						</View>
+					</View>
+				</TableViewRow>
+				<TableViewRow class="messageRow">
+					<View class="outerBubble">
+						<View class="bubble bubbleUser">
+							<Label text="Hi Bot" class="message messageUser"></Label>
+						</View>
+					</View>
+				</TableViewRow> -->
+			</TableView>
+		</View>
+		<View id="inputControlContainer">
+			
+		</View>
+	</ScrollView>
+</Alloy>
