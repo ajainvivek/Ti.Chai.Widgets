@@ -19,7 +19,11 @@
 			</TableView>
 		</View>
 		<View id="inputControlContainer">
-			
+			<!-- <View class="inputContainer">
+				<TextField class="inputField"></TextField>
+				<Button class="buttonAnswer"></Button>
+				<Button class="buttonInfo"></Button>
+			</View> -->
 		</View>
 	</ScrollView>
 </Alloy>
