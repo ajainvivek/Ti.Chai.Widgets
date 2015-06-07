@@ -13,6 +13,7 @@ exports.module = (function () {
 		this.tableView = options.tableView || {};
 		this.inputContainer = options.inputContainer || {};
 		this.data = options.data || {};
+		this.isCompleted = false;
 		
 		//Set data
 		dataInstance.setData(this.data);
@@ -80,14 +81,22 @@ exports.module = (function () {
 		
 		var bubble = Ti.UI.createView();
 		bubble.applyProperties(self._style["bubble" + options.type]); 
-		bubble.addEventListener("click", function () {
-			self.triggerAnswerControl(options.msg);
-		});
 
 		var label = Ti.UI.createLabel({
 			text: options.msg
 		});
 		label.applyProperties(self._style["label" + options.type]);
+		
+		//Add event on bubble click for inline edit
+		bubble.addEventListener("click", function (e) {
+			var qs = dataInstance.getData()[options.id];
+			bubble.setBorderWidth("1dp");
+			bubble.setBorderColor("green");
+			self.triggerAnswerControl(qs, {
+				label : label,
+				bubble : bubble
+			});
+		});
 
 		bubble.add(label);
 		outerBubble.add(bubble);
@@ -139,7 +148,8 @@ exports.module = (function () {
 		var currQs = dataInstance.getCurrQuestion();
 		var qs = this._buildMessageRow({
 			msg : currQs.title,
-			type : "Bot"
+			type : "Bot",
+			id: currQs.id
 		});
 		setTimeout(function () {
 			self.tableView.appendRow(qs);
@@ -152,15 +162,34 @@ exports.module = (function () {
 	 * @desc Renders the message on ui based on type bot/user
 	 */
 	UIBuilder.prototype.renderAnswer = function (obj) {
+		var currQs = dataInstance.getCurrQuestion();
+		
+		//if src is provided do inline edit
+		if (obj.src) {
+			obj.src.label.setText(obj.text);
+			obj.src.bubble.setBorderWidth("0dp");
+			obj.src.bubble.setBorderColor("transparent");
+			this.inputContainer.removeAllChildren();
+			console.log(obj.src);
+			if (!this.isCompleted) { //Check if all qs are asked
+				this.triggerAnswerControl(currQs);
+			}
+			return;
+		}
+		
 		var answer = this._buildMessageRow({
 			msg : obj.text,
-			type : "User"
+			type : "User",
+			id : currQs.id
 		});
 		this.tableView.appendRow(answer);
+		
 		if (obj.qsId !== null) {
 			dataInstance.update(obj.qsId);
 			this.renderQuestion();
 		} else {
+			this.inputContainer.removeAllChildren();
+			this.isCompleted = true;
 			alert("get summary details");
 		}
 		
@@ -178,20 +207,22 @@ exports.module = (function () {
 	 * @method triggerAnswerControl
 	 * @desc Triggers the answer control based on the type of question
 	 */
-	UIBuilder.prototype.triggerAnswerControl = function (currQs) {
+	UIBuilder.prototype.triggerAnswerControl = function (currQs, src) {
 		var self = this;
 		var inputControl = this._buildInputControl({
 			type: "numeric",
 			success: function (val) {
 				self.renderAnswer({
 					text: val,
-					qsId: currQs.nextQuestionId
+					qsId: currQs.nextQuestionId,
+					src: src
 				});
 			},
 			validate: function (val) {
 				return true;
 			}
 		});
+		
 		this.inputContainer.add(inputControl);	
 	};
 	

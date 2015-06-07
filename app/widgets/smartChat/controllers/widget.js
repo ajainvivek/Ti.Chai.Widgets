@@ -5,6 +5,7 @@ var inputContainer = $.inputControlContainer;
 
 var data = {
 	"q1" : {
+		"id": "q1",
 		"title" : "How Many People Live in your hosuehold",
 		"answerType" : "numericInput",
 		"isChildQuestion" : false,
@@ -18,6 +19,7 @@ var data = {
 		"help" : "help_q2_key"
 	},
 	"q2" : {
+		"id" : "q2",
 		"title" : "How Many childs?",
 		"answerType" : "numericInput",
 		"isChildQuestion" : false,
