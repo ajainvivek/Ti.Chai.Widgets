@@ -30,50 +30,22 @@
 
 /******* Message Style ***********/
 ".message": {
-	"bottom": "10dp",
-	"font": {
-		"fontFamily": "'Helvetica Neue', Helvetica, Arial",
-		"fontSize": "12dp"
-	},
-	"height": Ti.UI.SIZE,
-	"left": "10dp",
-	"right": "10dp",
-	"top": "10dp",
-	"width": Ti.UI.SIZE
 },
 ".messageBot": {
-	"color": "#FFFFFF",
-	"left": "20dp"
 },
 ".messageUser":     {
-	"color": "#141414",
-	"right": "20dp"
 },
 
 /******* Bubble Container ************/
 ".bubble": {
-	"bottom": "5dp",
-	"height": Titanium.UI.SIZE,
-	"top": "5dp",
-	"width": Titanium.UI.SIZE,
-	"backgroundLeftCap": "30dp",
-	"backgroundRightCap": "30dp",
-	"backgroundTopCap": "10dp",
-	"backgroundBottomCap": "10dp"
 },
 ".outerBubble": {
-	"height":           Ti.UI.SIZE,
-	"left": "5dp",
-	"right": "5dp",
-	"width":            Ti.UI.FILL
 },
 ".bubbleUser": {
-	"backgroundImage": WPATH( "bubble-user.png"),
-	"right": "0dp"
 },
 ".bubbleBot": {
-	"backgroundImage": WPATH( "bubble-bot.png"),
-	"left": "0dp"
+},
+".bubbleSpinner": {
 },
 
 /**************** Input Control Container ***********/

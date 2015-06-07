@@ -59,6 +59,14 @@
 	"backgroundImage": WPATH( "bubble-bot.png"),
 	"left": "0dp"
 }
+".bubbleSpinner": {
+	"bottom": "10dp",
+	"top": "10dp",
+	"height": "10dp",
+	"width": "30dp",
+	"left": "10dp"
+},
+
 
 /**************** Input Control Container ***********/
 

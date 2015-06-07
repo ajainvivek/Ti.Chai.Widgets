@@ -87,19 +87,66 @@ exports.module = (function () {
 		});
 		label.applyProperties(self._style["label" + options.type]);
 		
-		//Add event on bubble click for inline edit
-		bubble.addEventListener("click", function (e) {
-			var qs = dataInstance.getData()[options.id];
-			bubble.setBorderWidth("1dp");
-			bubble.setBorderColor("green");
-			self.triggerAnswerControl(qs, {
-				label : label,
-				bubble : bubble
+		if (options.type === "User") {
+			//Add event on bubble click for inline edit
+			bubble.addEventListener("click", function (e) {
+				var qs = dataInstance.getData()[options.id];
+				bubble.setBorderWidth("1dp");
+				bubble.setBorderColor("green");
+				self.triggerAnswerControl(qs, {
+					label : label,
+					bubble : bubble
+				});
 			});
-		});
+		}
+		
 
 		bubble.add(label);
 		outerBubble.add(bubble);
+		row.add(outerBubble);
+		
+		return row;
+	};
+	
+	/***
+	 * @method _spinnerAnimate
+	 * @desc Animate the spinner 
+	 */
+	UIBuilder.prototype._spinnerAnimate = function (loader) {
+		loader.image = WPATH("spinner/frame_" + this.loaderIndex + ".png");
+		this.loaderIndex++;
+		if (this.loaderIndex === 23) {
+			this.loaderIndex = 0;
+		}
+	};
+	
+	/***
+	 * @method _buildSpinnerRow
+	 * @desc Build Spinner Row
+	 */
+	UIBuilder.prototype._buildSpinnerRow = function (options) {
+		var self = this;
+		var row = Ti.UI.createTableViewRow();
+		row.applyProperties(self._style.tableViewRow);
+		
+		var outerBubble = Ti.UI.createView();
+		outerBubble.applyProperties(self._style.outerBubble);
+		
+		var spinner = Ti.UI.createImageView();
+		spinner.applyProperties(self._style["bubbleSpinner"]); 	 
+		
+		//Animate the gif
+		this.loaderIndex = 0;
+		var loaderAnimate = setInterval(function () {
+			self._spinnerAnimate(spinner);
+		}, 80);
+		
+		//Clear Interval
+		setTimeout(function () {
+			clearInterval(loaderAnimate);
+		}, 2000); 		
+		
+		outerBubble.add(spinner);
 		row.add(outerBubble);
 		
 		return row;
@@ -114,6 +161,7 @@ exports.module = (function () {
 		outerBubble : $.createStyle({ classes: ['outerBubble'] }),
 		bubbleBot : $.createStyle({ classes: ['bubble', 'bubbleBot'] }),
 		bubbleUser : $.createStyle({ classes: ['bubble', 'bubbleUser'] }),
+		bubbleSpinner : $.createStyle({ classes: ['bubbleSpinner'] }),
 		labelBot : $.createStyle({ classes: ['message', 'messageBot'] }),
 		labelUser : $.createStyle({ classes: ['message', 'messageUser'] }),
 		inputContainer : $.createStyle({ classes: ['inputContainer'] }),
@@ -146,15 +194,18 @@ exports.module = (function () {
 	UIBuilder.prototype.renderQuestion = function () {
 		var self = this;
 		var currQs = dataInstance.getCurrQuestion();
+		var spinner = this._buildSpinnerRow();
 		var qs = this._buildMessageRow({
 			msg : currQs.title,
 			type : "Bot",
 			id: currQs.id
 		});
+		this.tableView.appendRow(spinner);
 		setTimeout(function () {
+			self.tableView.deleteRow(spinner);
 			self.tableView.appendRow(qs);
 			self.triggerAnswerControl(currQs);
-		}, 1000);
+		}, 2000);
 	};
 	
 	/***
@@ -170,7 +221,6 @@ exports.module = (function () {
 			obj.src.bubble.setBorderWidth("0dp");
 			obj.src.bubble.setBorderColor("transparent");
 			this.inputContainer.removeAllChildren();
-			console.log(obj.src);
 			if (!this.isCompleted) { //Check if all qs are asked
 				this.triggerAnswerControl(currQs);
 			}
