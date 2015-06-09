@@ -48,6 +48,9 @@ exports.module = (function () {
 			Ti.API.error("Control supports only 2 options.");
 		}
 		
+		//Bind event for info button 
+		infoButton.addEventListener("click", options.help);
+		
 		//Bind event for left/right options 
 		leftButton.setTitle(options.data[0].label);
 		leftButton.addEventListener("click", function () {
@@ -75,11 +78,14 @@ exports.module = (function () {
 	 */
 	UIBuilder.prototype._buildInputControl = function (options) {
 		var self = this;
+		var keyboardType = helper.keyboardTypeMap.type;
 		
 		var inputContainer = Ti.UI.createView();
 		inputContainer.applyProperties(self._style.inputContainer);
 		
-		var inputField = Ti.UI.createTextField();
+		var inputField = Ti.UI.createTextField({
+			keyboardType: keyboardType
+		});
 		inputField.applyProperties(self._style.inputField);
 		
 		var answerButton = Ti.UI.createButton();
@@ -87,6 +93,9 @@ exports.module = (function () {
 		
 		var infoButton = Ti.UI.createButton();
 		infoButton.applyProperties(self._style.infoButton);
+		
+		//Bind event for info button 
+		infoButton.addEventListener("click", options.help);
 		
 		//On submit of answer
 		answerButton.addEventListener("click", function () {
@@ -261,7 +270,7 @@ exports.module = (function () {
 	};
 	
 	/***
-	 * @method triggerQuestion
+	 * @method _triggerDependentQuestion
 	 * @desc Trigger question based on the dependent/next question/populate summary details
 	 * @param {Object} obj - qs context 
 	 */
@@ -334,6 +343,9 @@ exports.module = (function () {
 							id: currQs.id
 						});
 					},
+					help: function () {
+						alert(currQs.help);
+					},
 					validate: function (val) {
 						return true;
 					}
@@ -351,10 +363,18 @@ exports.module = (function () {
 							src: src,
 							id: currQs.id
 						});
-					} 
+					},
+					help: function () {
+						alert(currQs.help);
+					}
 				});
 				this.inputContainer.removeAllChildren();
 				this.inputContainer.add(btnControl);
+				break;
+			case "none":
+				this._triggerDependentQuestion({
+					nxtQsId: currQs.nextQuestionId
+				});
 				break;
 			default:
 				Ti.API.error("Invalid answer control option passed.")
