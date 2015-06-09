@@ -109,4 +109,17 @@
 	"height": "30dp",
 	"width": "30dp",
 	"backgroundImage": WPATH("button-question.png"),
+},
+
+/**************** Button Control Container ***********/
+".leftAligned":{
+	left: "20dp",
+	backgroundColor: "#CCCCCC",
+	color: "#000000"
+},
+
+".rightAligned":{
+	right: "60dp",
+	backgroundColor: "#CCCCCC",
+	color: "#000000"
 }

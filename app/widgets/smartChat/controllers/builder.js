@@ -13,6 +13,7 @@ exports.module = (function () {
 		this.tableView = options.tableView || {};
 		this.inputContainer = options.inputContainer || {};
 		this.data = options.data || {};
+		this._rows = [];
 		this.isCompleted = false;
 		
 		//Set data
@@ -21,6 +22,51 @@ exports.module = (function () {
 		//Set Initial Question
 		dataInstance.setCurrQuestion(this.data.q1);
 	};
+	
+	/***
+	 * @method: _buildButtonControl
+	 * @desc: build button control based on type
+	 * @param {Array} 
+	 */
+	UIBuilder.prototype._buildButtonControl = function (options) {
+		var self = this;
+		
+		var inputContainer = Ti.UI.createView();
+		inputContainer.applyProperties(self._style.inputContainer);
+		
+		var leftButton = Ti.UI.createButton();
+		leftButton.applyProperties(self._style.leftAligned);
+		
+		var rightButton = Ti.UI.createButton();
+		rightButton.applyProperties(self._style.rightAligned);
+		
+		var infoButton = Ti.UI.createButton();
+		infoButton.applyProperties(self._style.infoButton);
+		
+		//Throw error if options data length exceeds 2
+		if (options.data.length > 2) {
+			Ti.API.error("Control supports only 2 options.");
+		}
+		
+		//Bind event for left/right options 
+		leftButton.setTitle(options.data[0].label);
+		leftButton.addEventListener("click", function () {
+			options.success(options.data[0]);
+		});
+		
+		rightButton.setTitle(options.data[1].label);
+		rightButton.addEventListener("click", function () {
+			options.success(options.data[1]);
+		});
+		
+		inputContainer.add(leftButton);
+		inputContainer.add(rightButton);
+		inputContainer.add(infoButton);
+		
+		return inputContainer;
+		
+	}
+	
 	
 	/***
 	 * @method: _buildInputControl
@@ -167,7 +213,9 @@ exports.module = (function () {
 		inputContainer : $.createStyle({ classes: ['inputContainer'] }),
 		inputField : $.createStyle({ classes: ['inputField'] }),
 		answerButton : $.createStyle({ classes: ['buttonAnswer'] }),
-		infoButton : $.createStyle({ classes: ['buttonInfo'] })
+		infoButton : $.createStyle({ classes: ['buttonInfo'] }),
+		leftAligned : $.createStyle({ classes: ['leftAligned'] }),
+		rightAligned : $.createStyle({ classes: ['rightAligned'] })
 	};
 	
 	/***
@@ -200,13 +248,34 @@ exports.module = (function () {
 			type : "Bot",
 			id: currQs.id
 		});
+		this.inputContainer.removeAllChildren(); // Remove inputContainer Content
 		this.tableView.appendRow(spinner);
+		this._rows.push(qs);
+		this.tableView.scrollToIndex(this._rows.length - 1); //Scroll to last index question
 		setTimeout(function () {
 			self.tableView.deleteRow(spinner);
 			self.tableView.appendRow(qs);
+			self.tableView.scrollToIndex(self._rows.length - 1);
 			self.triggerAnswerControl(currQs);
 		}, 2000);
 	};
+	
+	/***
+	 * @method triggerQuestion
+	 * @desc Trigger question based on the dependent/next question/populate summary details
+	 * @param {Object} obj - qs context 
+	 */
+	UIBuilder.prototype._triggerDependentQuestion = function (obj) {
+		if (obj.nxtQsId !== null) {
+			dataInstance.update(obj.nxtQsId);
+			this.renderQuestion();
+		} else {
+			this.inputContainer.removeAllChildren();
+			this.isCompleted = true;
+			alert("get summary details");
+		}
+	};
+	
 	
 	/***
 	 * @method renderAnswer
@@ -233,16 +302,9 @@ exports.module = (function () {
 			id : currQs.id
 		});
 		this.tableView.appendRow(answer);
-		
-		if (obj.qsId !== null) {
-			dataInstance.update(obj.qsId);
-			this.renderQuestion();
-		} else {
-			this.inputContainer.removeAllChildren();
-			this.isCompleted = true;
-			alert("get summary details");
-		}
-		
+		this._rows.push(answer);
+		this.tableView.scrollToIndex(this._rows.length - 1); //Scroll to last answer
+		this._triggerDependentQuestion(obj);
 	};
 	
 	/***
@@ -259,21 +321,48 @@ exports.module = (function () {
 	 */
 	UIBuilder.prototype.triggerAnswerControl = function (currQs, src) {
 		var self = this;
-		var inputControl = this._buildInputControl({
-			type: "numeric",
-			success: function (val) {
-				self.renderAnswer({
-					text: val,
-					qsId: currQs.nextQuestionId,
-					src: src
-				});
-			},
-			validate: function (val) {
-				return true;
-			}
-		});
 		
-		this.inputContainer.add(inputControl);	
+		switch (currQs.answerType) {
+			case "numericInput":
+				var inputControl = this._buildInputControl({
+					type: "numeric",
+					success: function (val) {
+						self.renderAnswer({
+							text: val,
+							nxtQsId: currQs.nextQuestionId,
+							src: src,
+							id: currQs.id
+						});
+					},
+					validate: function (val) {
+						return true;
+					}
+				});
+				this.inputContainer.removeAllChildren();
+				this.inputContainer.add(inputControl);
+				break;
+			case "buttonGroup":
+				var btnControl = this._buildButtonControl({
+					data: currQs.answerOptions,
+					success: function (option) {
+						self.renderAnswer({
+							text: option.label,
+							nxtQsId: option.nextDependentQuestion ? option.nextDependentQuestion : currQs.nextQuestionId,
+							src: src,
+							id: currQs.id
+						});
+					} 
+				});
+				this.inputContainer.removeAllChildren();
+				this.inputContainer.add(btnControl);
+				break;
+			default:
+				Ti.API.error("Invalid answer control option passed.")
+				break;
+		}
+		
+		
+			
 	};
 	
 	//Add event listener for answer reply to trigger next question

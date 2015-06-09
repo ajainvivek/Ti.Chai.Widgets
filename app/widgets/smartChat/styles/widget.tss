@@ -9,8 +9,9 @@
 
 /******** Messages Container ***********/
 "#messagesContainer": {
-	"top": 0,
-	"zIndex": 9999
+	"top": "0dp",
+	"zIndex": 9999,
+	"bottom": "60dp"
 },
 "#messages": {
 	"separatorStyle": Ti.UI.iPhone.TableViewSeparatorStyle.NONE
@@ -58,35 +59,10 @@
 },
 
 ".inputField": {
-	"left": "5dp",
-	"right": "40dp",
-	"height": "35dp",
-	"backgroundColor": "#FFFFFF",
-	"color": "#161616",
-	"focused": "false",
-	"font": {
-		"fontSize": "Helvetica, Arial",
-		"fontSize": "14dp"
-	},
-	"hintText": "Type your answer here...",
-	"suppressReturn": "false",
-	"width": Ti.UI.FILL,
-	"borderWidth": "1dp",
-	"borderColor": "#ADE1FA",
-	"paddingLeft" : "5dp"
 },
 
 ".buttonAnswer": {
-	"right": "5dp",
-	"height": "30dp",
-	"width": "30dp",
-	"backgroundImage": WPATH("button-play.png"),
-	"visible": false
 },
 
 ".buttonInfo": {
-	"right": "5dp",
-	"height": "30dp",
-	"width": "30dp",
-	"backgroundImage": WPATH("button-question.png"),
 }

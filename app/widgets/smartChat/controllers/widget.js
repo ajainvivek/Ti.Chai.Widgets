@@ -1,6 +1,7 @@
 var config = Alloy.createWidget('smartChat', 'config').module;
 var builder = Alloy.createWidget('smartChat', 'builder').module;
 var tableView = $.messages;
+var scrollView = $.heroContainer;
 var inputContainer = $.inputControlContainer;
 
 var data = {
@@ -20,7 +21,7 @@ var data = {
 	},
 	"q2" : {
 		"id" : "q2",
-		"title" : "How Many childs?",
+		"title" : "How many children?",
 		"answerType" : "numericInput",
 		"isChildQuestion" : false,
 		"validations" : {
@@ -28,10 +29,31 @@ var data = {
 			"minValue" : 0
 		},
 		"answerOptions" : null,
-		"nextQuestionId" : null,
+		"nextQuestionId" : "q3",
 		"answerKey" : "",
 		"help" : "help_q2_key"
-	}
+	},
+	"q3":{
+		  "id" : "q3",
+	      "title":"Who needs insurance?",
+	      "answerType":"buttonGroup",
+	      "isChildQuestion":true,
+	      "answerOptions":[
+	         {
+	            "key":"me",
+	            "label":"Me and My Family",
+	            "nextDependentQuestion":"q2"
+	         },
+	         {
+	            "key":"business",
+	            "label":"A Business"
+	         }
+	      ],
+	      "nextQuestionId":null,
+	      "answerKey":"",
+	      "help":"help_q1_key",
+	      "validations":null
+	   }
 };
 
 // Initialize Smart Chat Widget
