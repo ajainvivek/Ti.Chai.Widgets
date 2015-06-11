@@ -68,7 +68,7 @@ exports.module = (function () {
 		
 		return inputContainer;
 		
-	}
+	};
 	
 	
 	/***
@@ -78,7 +78,7 @@ exports.module = (function () {
 	 */
 	UIBuilder.prototype._buildInputControl = function (options) {
 		var self = this;
-		var keyboardType = helper.keyboardTypeMap.type;
+		var keyboardType = helper.keyboardTypeMap(options.type);
 		
 		var inputContainer = Ti.UI.createView();
 		inputContainer.applyProperties(self._style.inputContainer);
@@ -100,7 +100,12 @@ exports.module = (function () {
 		//On submit of answer
 		answerButton.addEventListener("click", function () {
 			var value = inputField.getValue();
-			options.success(value);
+			var validate = options.validate(value);
+			if (validate.isValid) {
+				options.success(value);
+			} else {
+				alert(validate.message);
+			}	
 		});
 		
 		//On textfield change show/hide btn's
@@ -347,7 +352,12 @@ exports.module = (function () {
 						alert(currQs.help);
 					},
 					validate: function (val) {
-						return true;
+						var isValid = helper.inputValidate({
+							type: "numeric",
+							maxValue: currQs.validations.maxValue,
+							minValue: currQs.validations.minValue
+						}, val);
+						return isValid;
 					}
 				});
 				this.inputContainer.removeAllChildren();
@@ -377,7 +387,7 @@ exports.module = (function () {
 				});
 				break;
 			default:
-				Ti.API.error("Invalid answer control option passed.")
+				Ti.API.error("Invalid answer control option passed.");
 				break;
 		}
 		
