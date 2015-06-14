@@ -18,7 +18,7 @@ exports.module = (function () {
 	 */
 	var keyboardTypeMap = function (type) {
 		var keyboardMap = {
-			"number" : Titanium.UI.KEYBOARD_NUMBER_PAD,
+			"numeric" : Titanium.UI.KEYBOARD_NUMBER_PAD,
 			"alpha" : Titanium.UI.KEYBOARD_DEFAULT,
 			"email" : Titanium.UI.KEYBOARD_EMAIL,
 			"phone" : Titanium.UI.KEYBOARD_PHONE_PAD
