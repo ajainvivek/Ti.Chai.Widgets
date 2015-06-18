@@ -15,7 +15,7 @@ var data = {
 		}, {
 			"id" : 2,
 			"value" : "female",
-			"nxtQsId" : "2"
+			"nextQsId" : "6"
 		} ],
 		"nextQsId" : "2",
 		"help" : "Choose valid gender",
@@ -42,10 +42,11 @@ var data = {
 		"repeat" : 0
 	},
 	"3" : {
-		"qsId" : "3",
+		"id" : "3",
 		"title" : "Graduation year?",
-		"type" : "date",
+		"type" : "picker",
 		"validate" : {
+			"type" : "date",
 			"range" : {
 				"min" : "",
 				"max" : ""
@@ -56,7 +57,7 @@ var data = {
 		"repeat" : 0
 	},
 	"4" : {
-		"qsId" : "4",
+		"id" : "4",
 		"title" : "What are your favourite food?",
 		"type" : "multi",
 		"options" : [ {
@@ -73,7 +74,7 @@ var data = {
 		"repeat" : 0
 	},
 	"5" : {
-		"qsId" : "5",
+		"id" : "5",
 		"title" : "Are you married ?",
 		"type" : "single",
 		"options" : [ {
@@ -87,7 +88,7 @@ var data = {
 		"repeat" : 0
 	},
 	"6" : {
-		"qsId" : "6",
+		"id" : "6",
 		"title" : "You are done",
 		"type" : "info",
 		"repeat" : 0

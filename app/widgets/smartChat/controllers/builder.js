@@ -1,5 +1,6 @@
 var helper = Alloy.createWidget('smartChat', 'helper').module;
 var data = Alloy.createWidget('smartChat', 'data').module;
+var moment = require('alloy/moment');
 var dataInstance = data.getInstance();
 
 /***
@@ -68,6 +69,62 @@ exports.module = (function () {
 		
 		return inputContainer;
 		
+	};
+	
+	/***
+	 * @method: _buildPickerControl
+	 * @desc: build input control based on type
+	 * @param {String} type - numeric / alpha pad
+	 */
+	UIBuilder.prototype._buildPickerControl = function (options) {
+		var self = this;
+		var keyboardType = helper.keyboardTypeMap(options.type);
+		
+		var inputContainer = Ti.UI.createView({
+			backgroundColor: "#4e4f47"
+		});
+		inputContainer.applyProperties(self._style.inputContainer);
+		
+		var picker = Ti.UI.createPicker({
+			type: Ti.UI.PICKER_TYPE_DATE
+		});
+		
+		//Set Min/Max Date for picker
+		if (options.validate.range && options.validate.range.min) {
+			var date = new Date(options.validate.range.min);
+			if (!isNaN(date.getDate())) {
+				picker.setMinDate(options.validate.range.min);
+			} else {
+				Ti.API.error("Invalid min date type passed.");
+			}
+		}
+		
+		if (options.validate.range && options.validate.range.max && options.validate.range.max instanceof Date) {
+			var date = new Date(options.validate.range.max);
+			if (!isNaN(date.getDate())) {
+				picker.setMinDate(options.validate.range.max);
+			} else {
+				Ti.API.error("Invalid max date type passed.");
+			}
+		}
+		
+		var answerButton = Ti.UI.createButton();
+		answerButton.applyProperties(self._style.answerButton);
+		
+		//Set container height
+		this.inputContainer.setHeight("100dp");
+		
+		//On submit of answer
+		answerButton.addEventListener("click", function () {
+			var value = moment(picker.getValue()).format('MMMM Do YYYY');
+			options.success(value);
+			self.inputContainer.setHeight("40dp"); //Reset Height
+		});
+		
+		inputContainer.add(picker);
+		inputContainer.add(answerButton);
+		
+		return inputContainer;
 	};
 	
 	
@@ -259,7 +316,6 @@ exports.module = (function () {
 		var self = this;
 		var currQs = dataInstance.getCurrQuestion();
 		var spinner = this._buildSpinnerRow();
-		console.log(currQs);
 		var qs = this._buildMessageRow({
 			msg : currQs.title,
 			type : "Bot",
@@ -338,7 +394,6 @@ exports.module = (function () {
 	 */
 	UIBuilder.prototype.triggerAnswerControl = function (currQs, src) {
 		var self = this;
-		
 		switch (currQs.type) {
 			case "textfield":
 				var inputControl = this._buildInputControl({
@@ -366,6 +421,7 @@ exports.module = (function () {
 				var btnControl = this._buildButtonControl({
 					data: currQs.options,
 					success: function (option) {
+						console.log(option);
 						self.renderAnswer({
 							text: option.value,
 							nxtQsId: option.nextQsId ? option.nextQsId : currQs.nextQsId,
@@ -379,6 +435,22 @@ exports.module = (function () {
 				});
 				this.inputContainer.removeAllChildren();
 				this.inputContainer.add(btnControl);
+				break;
+			case "picker":
+				var pickerControl = this._buildPickerControl({
+					type: currQs.validate.type,
+					success: function (val) {
+						self.renderAnswer({
+							text: val,
+							nxtQsId: currQs.nextQsId,
+							src: src,
+							id: currQs.id
+						});
+					},
+					validate: currQs.validate
+				});
+				this.inputContainer.removeAllChildren();
+				this.inputContainer.add(pickerControl);
 				break;
 			case "none":
 				this._triggerDependentQuestion({

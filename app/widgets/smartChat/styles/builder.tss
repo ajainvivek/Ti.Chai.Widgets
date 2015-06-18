@@ -99,8 +99,7 @@
 	"right": "5dp",
 	"height": "30dp",
 	"width": "30dp",
-	"backgroundImage": WPATH("button-done.png"),
-	"visible": false
+	"backgroundImage": WPATH("button-done.png")
 },
 
 ".buttonInfo": {
