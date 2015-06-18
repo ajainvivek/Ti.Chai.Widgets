@@ -6,7 +6,7 @@ var inputContainer = $.inputControlContainer;
 
 var data = {
 	"1" : {
-		"qsId" : "1",
+		"id" : "1",
 		"title" : "Wnat is your gender?",
 		"type" : "bubble",
 		"options" : [ {
@@ -22,7 +22,7 @@ var data = {
 		"repeat" : 0
 	},
 	"2" : {
-		"qsId" : "2",
+		"id" : "2",
 		"title" : "How old are you?",
 		"type" : "textfield",
 		"validate" : {

@@ -80,7 +80,9 @@ exports.module = (function () {
 		var self = this;
 		var keyboardType = helper.keyboardTypeMap(options.type);
 		
-		var inputContainer = Ti.UI.createView();
+		var inputContainer = Ti.UI.createView({
+			backgroundColor: "#4e4f47"
+		});
 		inputContainer.applyProperties(self._style.inputContainer);
 		
 		var inputField = Ti.UI.createTextField({

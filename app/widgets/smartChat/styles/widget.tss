@@ -3,7 +3,8 @@
 	"contentHeight":    Ti.UI.FILL,
 	"contentWidth":     Ti.UI.FILL,
 	"height":           Ti.UI.FILL,
-	"width":            Ti.UI.FILL
+	"width":            Ti.UI.FILL,
+	"backgroundColor": "#f4f5dd"
 }
 
 
@@ -11,8 +12,7 @@
 "#messagesContainer": {
 	"top": "0dp",
 	"zIndex": 9999,
-	"bottom": "40dp",
-	"backgroundColor": "#f4f5dd"
+	"bottom": "40dp"
 },
 "#messages": {
 	"separatorStyle": Ti.UI.iPhone.TableViewSeparatorStyle.NONE,
@@ -56,8 +56,7 @@
 	"bottom": "0dp",
 	"left": "0dp",
 	"height": "40dp",
-	"zIndex": 999999,
-	"backgroundColor": "#4e4f47"
+	"zIndex": 999999
 },
 
 ".inputField": {
