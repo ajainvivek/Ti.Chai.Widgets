@@ -33,17 +33,27 @@ exports.module = (function () {
 	 * @param {Object} rule - validation rule
 	 * {
 	 *  	type : string/numeric/email/phone,
-	 *  	maxLength: 10,
-	 *  	minLength: 1,
-	 *  	minValue: 10, //only for numeric
-	 *  	maxValue: 100, //only for numeric
+	 *  	length: {
+	 *  		min : 1,
+	 *  		max : 10
+	 *  	},
+	 *  	value: { //numeric value
+	 *  		min : 10,
+	 *  		max : 100
+	 *  	},
 	 *  	required: true/false
 	 * }
 	 * @param {String} val - value passed
 	 * @return {Boolean} isValid   
 	 */
 	var inputValidate = function (rule, val) {
-		var type = rule.type || "";
+		var rule = {
+			type : rule.type,
+			maxLength : rule.length ? rule.length.max : undefined,
+			minLength : rule.length ? rule.length.min : undefined,
+			maxValue : rule.value ? rule.value.max : undefined,
+			minValue : rule.value ? rule.value.min : undefined
+		};
 		var message = "";
 		var isValid = false;
 		
@@ -92,14 +102,14 @@ exports.module = (function () {
 			}
 			
 			var isValid = false;
-			if ((min !== undefined) && val.length >= min) {
+			if ((min !== undefined) && val.toString().length >= min) {
 				isValid = true;
 			} else {
 				message += "Minimun length has to be "+ min +" \n";
 				return false;
 			}
 			
-			if (max && val.length <= max) {
+			if (max && val.toString().length <= max) {
 				isValid = true;
 			} else {
 				message += "Maximum length has to be "+ max +" \n";
@@ -134,7 +144,7 @@ exports.module = (function () {
 			return isValid;
 		};
 		
-		switch (type) {
+		switch (rule.type) {
 			case "numeric":
 				var val = parseInt(val);
 				isValid = _isNumeric(val);

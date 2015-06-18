@@ -20,7 +20,7 @@ exports.module = (function () {
 		dataInstance.setData(this.data);
 	
 		//Set Initial Question
-		dataInstance.setCurrQuestion(this.data.q1);
+		dataInstance.setCurrQuestion(this.data["1"]);
 	};
 	
 	/***
@@ -52,12 +52,12 @@ exports.module = (function () {
 		infoButton.addEventListener("click", options.help);
 		
 		//Bind event for left/right options 
-		leftButton.setTitle(options.data[0].label);
+		leftButton.setTitle(options.data[0].value);
 		leftButton.addEventListener("click", function () {
 			options.success(options.data[0]);
 		});
 		
-		rightButton.setTitle(options.data[1].label);
+		rightButton.setTitle(options.data[1].value);
 		rightButton.addEventListener("click", function () {
 			options.success(options.data[1]);
 		});
@@ -257,6 +257,7 @@ exports.module = (function () {
 		var self = this;
 		var currQs = dataInstance.getCurrQuestion();
 		var spinner = this._buildSpinnerRow();
+		console.log(currQs);
 		var qs = this._buildMessageRow({
 			msg : currQs.title,
 			type : "Bot",
@@ -336,14 +337,14 @@ exports.module = (function () {
 	UIBuilder.prototype.triggerAnswerControl = function (currQs, src) {
 		var self = this;
 		
-		switch (currQs.answerType) {
-			case "numericInput":
+		switch (currQs.type) {
+			case "textfield":
 				var inputControl = this._buildInputControl({
-					type: "numeric",
+					type: currQs.validate ? currQs.validate.type : "default",
 					success: function (val) {
 						self.renderAnswer({
 							text: val,
-							nxtQsId: currQs.nextQuestionId,
+							nxtQsId: currQs.nextQsId,
 							src: src,
 							id: currQs.id
 						});
@@ -352,24 +353,20 @@ exports.module = (function () {
 						alert(currQs.help);
 					},
 					validate: function (val) {
-						var isValid = helper.inputValidate({
-							type: "numeric",
-							maxValue: currQs.validations.maxValue,
-							minValue: currQs.validations.minValue
-						}, val);
+						var isValid = helper.inputValidate(currQs.validate, val);
 						return isValid;
 					}
 				});
 				this.inputContainer.removeAllChildren();
 				this.inputContainer.add(inputControl);
 				break;
-			case "buttonGroup":
+			case "bubble":
 				var btnControl = this._buildButtonControl({
-					data: currQs.answerOptions,
+					data: currQs.options,
 					success: function (option) {
 						self.renderAnswer({
-							text: option.label,
-							nxtQsId: option.nextDependentQuestion ? option.nextDependentQuestion : currQs.nextQuestionId,
+							text: option.value,
+							nxtQsId: option.nextQsId ? option.nextQsId : currQs.nextQsId,
 							src: src,
 							id: currQs.id
 						});
@@ -383,7 +380,7 @@ exports.module = (function () {
 				break;
 			case "none":
 				this._triggerDependentQuestion({
-					nxtQsId: currQs.nextQuestionId
+					nxtQsId: currQs.nextQsId
 				});
 				break;
 			default:

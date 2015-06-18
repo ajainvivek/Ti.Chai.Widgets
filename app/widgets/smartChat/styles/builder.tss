@@ -1,7 +1,7 @@
 /******* Message Row Style ***********/
 ".messageRow": {
 	"layout": "vertical",
-	"backgroundColor": 'white',
+	"backgroundColor": 'transparent',
 	"selectedBackgroundColor": "transparent",
 	"touchEnabled": false
 },
@@ -52,11 +52,11 @@
 	"width":            Ti.UI.FILL
 },
 ".bubbleUser": {
-	"backgroundImage": WPATH( "bubble-user.png"),
+	"backgroundImage": WPATH( "bubble-user-white.png"),
 	"right": "0dp"
 },
 ".bubbleBot": {
-	"backgroundImage": WPATH( "bubble-bot.png"),
+	"backgroundImage": WPATH( "bubble-bot-grey.png"),
 	"left": "0dp"
 }
 ".bubbleSpinner": {
@@ -81,8 +81,7 @@
 	"left": "5dp",
 	"right": "40dp",
 	"height": "35dp",
-	"backgroundColor": "#FFFFFF",
-	"color": "#161616",
+	"color": "#fff",
 	"focused": "false",
 	"font": {
 		"fontSize": "Helvetica, Arial",
@@ -91,16 +90,16 @@
 	"hintText": "Type your answer here...",
 	"suppressReturn": "false",
 	"width": Ti.UI.FILL,
-	"borderWidth": "1dp",
-	"borderColor": "#ADE1FA",
-	"paddingLeft" : "5dp"
+	"paddingLeft" : "5dp",
+	"backgroundColor" : "#5f6056",
+	"opacity": 0.8
 },
 
 ".buttonAnswer": {
 	"right": "5dp",
 	"height": "30dp",
 	"width": "30dp",
-	"backgroundImage": WPATH("button-play.png"),
+	"backgroundImage": WPATH("button-done.png"),
 	"visible": false
 },
 
@@ -108,7 +107,7 @@
 	"right": "5dp",
 	"height": "30dp",
 	"width": "30dp",
-	"backgroundImage": WPATH("button-question.png"),
+	"backgroundImage": WPATH("button-help.png"),
 },
 
 /**************** Button Control Container ***********/
