@@ -90,8 +90,8 @@
 	"hintText": "Type your answer here...",
 	"suppressReturn": "false",
 	"width": Ti.UI.FILL,
-	"paddingLeft" : "5dp",
-	"backgroundColor" : "#5f6056",
+	"paddingLeft": "5dp",
+	"backgroundColor": "#5f6056",
 	"opacity": 0.8
 },
 
@@ -99,25 +99,42 @@
 	"right": "5dp",
 	"height": "30dp",
 	"width": "30dp",
-	"backgroundImage": WPATH("button-done.png")
+	"backgroundImage": WPATH( "button-done.png")
 },
 
 ".buttonInfo": {
 	"right": "5dp",
 	"height": "30dp",
 	"width": "30dp",
-	"backgroundImage": WPATH("button-help.png"),
+	"backgroundImage": WPATH( "button-help.png")
 },
 
 /**************** Button Control Container ***********/
+".buttonContainer" : {
+	"backgroundColor": "#5f6056",
+	"height": Titanium.UI.SIZE,
+	"width": Titanium.UI.SIZE,
+	"borderRadius": 5
+},
+
+".optionBtn": {
+	"font": {
+		"fontSize": "Helvetica, Arial",
+		"fontSize": "14dp"
+	},
+	"height": Titanium.UI.SIZE,
+	"width": Titanium.UI.SIZE,
+	"top": 5,
+	"right": 5,
+	"bottom": 5,
+	"left": 5,
+	"color": "#ffffff"
+},
+
 ".leftAligned":{
-	left: "20dp",
-	backgroundColor: "#CCCCCC",
-	color: "#000000"
+	"left": "20dp"
 },
 
 ".rightAligned":{
-	right: "60dp",
-	backgroundColor: "#CCCCCC",
-	color: "#000000"
+	"right": "60dp"
 }

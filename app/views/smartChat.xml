@@ -1,0 +1,9 @@
+<Alloy>
+	<NavigationWindow platform="ios" title="smartChat" id="smartChat">
+		<Window id="container">
+			<LeftNavButton>
+				<Button onClick="closeWindow">Back</Button>
+			</LeftNavButton>
+		</Window>
+	</NavigationWindow>
+</Alloy>

@@ -1,10 +1,10 @@
 <Alloy>
-	<ScrollView id="heroContainer" showVerticalScrollIndicator="true" showHorizontalScrollIndicator="false">
-		<View id="messagesContainer">
-			<TableView id="messages">
-			</TableView>
-		</View>
-	</ScrollView>
-	<View id="inputControlContainer">
+	<View id="heroContainer">
+		<ScrollView showVerticalScrollIndicator="true" showHorizontalScrollIndicator="false">
+			<View id="messagesContainer">
+				<TableView id="messages"></TableView>
+			</View>
+		</ScrollView>
+		<View id="inputControlContainer"></View>
 	</View>
 </Alloy>

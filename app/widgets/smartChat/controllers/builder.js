@@ -16,6 +16,7 @@ exports.module = (function () {
 		this.data = options.data || {};
 		this._rows = [];
 		this.isCompleted = false;
+		this.onFinish = options.onFinish || function () {};
 		
 		//Set data
 		dataInstance.setData(this.data);
@@ -35,11 +36,20 @@ exports.module = (function () {
 		var inputContainer = Ti.UI.createView();
 		inputContainer.applyProperties(self._style.inputContainer);
 		
+		var leftButtonContainer = Ti.UI.createView();
+		leftButtonContainer.applyProperties(self._style.leftButtonContainer);
+		
 		var leftButton = Ti.UI.createButton();
-		leftButton.applyProperties(self._style.leftAligned);
+		leftButton.applyProperties(self._style.optionBtn);
+		leftButtonContainer.add(leftButton);
+		
+		var rightButtonContainer = Ti.UI.createView();
+		rightButtonContainer.applyProperties(self._style.rightButtonContainer);
 		
 		var rightButton = Ti.UI.createButton();
-		rightButton.applyProperties(self._style.rightAligned);
+		rightButton.applyProperties(self._style.optionBtn);
+		
+		rightButtonContainer.add(rightButton);
 		
 		var infoButton = Ti.UI.createButton();
 		infoButton.applyProperties(self._style.infoButton);
@@ -63,8 +73,8 @@ exports.module = (function () {
 			options.success(options.data[1]);
 		});
 		
-		inputContainer.add(leftButton);
-		inputContainer.add(rightButton);
+		inputContainer.add(leftButtonContainer);
+		inputContainer.add(rightButtonContainer);
 		inputContainer.add(infoButton);
 		
 		return inputContainer;
@@ -287,8 +297,9 @@ exports.module = (function () {
 		inputField : $.createStyle({ classes: ['inputField'] }),
 		answerButton : $.createStyle({ classes: ['buttonAnswer'] }),
 		infoButton : $.createStyle({ classes: ['buttonInfo'] }),
-		leftAligned : $.createStyle({ classes: ['leftAligned'] }),
-		rightAligned : $.createStyle({ classes: ['rightAligned'] })
+		optionBtn : $.createStyle({ classes: ['optionBtn'] }),
+		leftButtonContainer : $.createStyle({ classes: ['buttonContainer', 'leftAligned'] }),
+		rightButtonContainer : $.createStyle({ classes: ['buttonContainer', 'rightAligned'] }),
 	};
 	
 	/***
@@ -345,7 +356,7 @@ exports.module = (function () {
 		} else {
 			this.inputContainer.removeAllChildren();
 			this.isCompleted = true;
-			alert("get summary details");
+			this.onFinish(); //Chat conversation is completed
 		}
 	};
 	

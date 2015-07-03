@@ -1,5 +1,10 @@
 <Alloy>
-	<Window class="container">
-		<Widget src="smartChat"></Widget>
-	</Window>
+	<TabGroup id="tabGroup">
+		<Tab title="Chai" icon="/images/home.png">
+			<Require id="homeController" src="home"></Require>
+		</Tab>
+		<Tab title="About" icon="/images/info.png">
+			<Require id="aboutController" src="about"></Require>
+		</Tab>
+	</TabGroup>
 </Alloy>

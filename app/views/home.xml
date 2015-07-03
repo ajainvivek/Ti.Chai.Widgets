@@ -1,0 +1,12 @@
+<Alloy>
+	<Window title="Home" id="home">
+		<ListView id="list" onItemclick="onItemClick">
+			<ListSection headerTitle="Smart Chat">
+				<ListItem class="list-item" title="Interactive chart component"/>
+			</ListSection>
+			<ListSection headerTitle="Random Tiles">
+				<ListItem class="list-item" title="Random animated tiles"/>
+			</ListSection>
+		</ListView>
+	</Window>
+</Alloy>

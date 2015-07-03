@@ -1,0 +1,5 @@
+<Alloy>
+	<Window title="About" id="about">
+		<Label text="Developed by: Ajain Vivek"></Label>
+	</Window>
+</Alloy>

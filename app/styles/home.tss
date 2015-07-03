@@ -1,0 +1,19 @@
+
+"#list" : {
+  separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
+  backgroundColor: "transparent"
+},
+
+".view-row-separator":{
+	height:0.5,
+	backgroundColor:'#eee',
+	bottom:0
+},
+
+".list-item" : {
+	font: {
+		fontSize: 12
+	}, 
+	backgroundColor: "#ccc"
+}
+
