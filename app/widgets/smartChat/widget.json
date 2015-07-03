@@ -1,13 +1,13 @@
 {
 	"id": "smartChat",
 	"name": "smartChat",
-	"description" : "",
-	"author": "",
+	"description" : "Interactive Chat Widget",
+	"author": "Ajain Vivek",
 	"version": "1.0",
 	"copyright":"Copyright (c) 2015",
 	"license":"Public Domain",
 	"min-alloy-version": "1.0",
 	"min-titanium-version":"2.1",
-	"tags":"",
+	"tags":"interactive chat, smart chat",
 	"platforms":"android,ios"
 }
