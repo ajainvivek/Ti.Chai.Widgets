@@ -1,4 +1,4 @@
-# Ti.ImageViewer
+# smartChat - Interactive Chat Widget
 Smart Chart Interactive Chat widget for Appcelerator Studio
 
 With smart chart allows interactive chat with user bringing unique experience.
