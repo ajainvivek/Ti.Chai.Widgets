@@ -1,9 +1,9 @@
 # smartChat - Interactive Chat Widget
 Smart Chart Interactive Chat widget for Appcelerator Studio. It's still in Beta Version.
 
-With smart chart allows interactive chat with user bringing unique experience.
+It can be used across in various scenarios such as long form filling with conditional flow, interactive feedback and to collect various information via chat mechanism.  
 
-It can be used various scenarios such as eliminating boring long form filling, interactive feedback, interactive chat with user to collect various information via chat mechanism.  
+I would also love some one to contribute in an intelligent chat component i.e something similar to SIRI in future.
 
 It comprises of strict data structure in order to traverse through the flow. Will be shortly updating with video cast explaining the flow.
 
