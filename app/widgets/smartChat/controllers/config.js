@@ -2,6 +2,7 @@
  * @desc: Configuration 
  */
 exports.module = {
-	timeStamp : false
+	timeStamp : false,
+	delay: 800
 };
 

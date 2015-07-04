@@ -1,3 +1,4 @@
+var config = Alloy.createWidget('smartChat', 'config').module;
 var helper = Alloy.createWidget('smartChat', 'helper').module;
 var data = Alloy.createWidget('smartChat', 'data').module;
 var moment = require('alloy/moment');
@@ -17,12 +18,13 @@ exports.module = (function () {
 		this._rows = [];
 		this.isCompleted = false;
 		this.onFinish = options.onFinish || function () {};
+		this.delay = options.delay || config.delay;
 		
 		//Set data
 		dataInstance.setData(this.data);
 	
 		//Set Initial Question
-		dataInstance.setCurrQuestion(this.data["1"]);
+		dataInstance.setCurrQuestion(this.data[options.initialQs]);
 	};
 	
 	/***
@@ -273,7 +275,7 @@ exports.module = (function () {
 		//Clear Interval
 		setTimeout(function () {
 			clearInterval(loaderAnimate);
-		}, 2000); 		
+		}, this.delay); 		
 		
 		outerBubble.add(spinner);
 		row.add(outerBubble);
@@ -341,7 +343,7 @@ exports.module = (function () {
 			self.tableView.appendRow(qs);
 			self.tableView.scrollToIndex(self._rows.length - 1);
 			self.triggerAnswerControl(currQs);
-		}, 2000);
+		}, this.delay);
 	};
 	
 	/***
@@ -350,7 +352,7 @@ exports.module = (function () {
 	 * @param {Object} obj - qs context 
 	 */
 	UIBuilder.prototype._triggerDependentQuestion = function (obj) {
-		if (obj.nxtQsId !== null) {
+		if (obj.nxtQsId !== undefined) {
 			dataInstance.update(obj.nxtQsId);
 			this.renderQuestion();
 		} else {
@@ -432,7 +434,6 @@ exports.module = (function () {
 				var btnControl = this._buildButtonControl({
 					data: currQs.options,
 					success: function (option) {
-						console.log(option);
 						self.renderAnswer({
 							text: option.value,
 							nxtQsId: option.nextQsId ? option.nextQsId : currQs.nextQsId,
@@ -463,7 +464,7 @@ exports.module = (function () {
 				this.inputContainer.removeAllChildren();
 				this.inputContainer.add(pickerControl);
 				break;
-			case "none":
+			case "info":
 				this._triggerDependentQuestion({
 					nxtQsId: currQs.nextQsId
 				});

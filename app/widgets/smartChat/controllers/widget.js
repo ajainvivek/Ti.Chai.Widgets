@@ -6,7 +6,9 @@ var scrollView = $.heroContainer;
 var inputContainer = $.inputControlContainer;
 var data = args.data;
 var onFinish = args.onFinish;
-console.log(args);
+var initialQs = args.initialQs;
+var delay = args.delay;
+
 // Initialize Smart Chat Widget
 var init = function() {
 	// Initialize UI Builder Instance
@@ -14,7 +16,9 @@ var init = function() {
 		tableView : tableView,
 		inputContainer : inputContainer,
 		data : data,
-		onFinish : onFinish
+		onFinish : onFinish,
+		initialQs : initialQs,
+		delay : delay
 	});
 	builderInstance.renderQuestion();
 

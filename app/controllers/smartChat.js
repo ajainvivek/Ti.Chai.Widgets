@@ -100,8 +100,10 @@ var callChatEnded = function (responseObj) {
 };
 
 var smartChat = Alloy.createWidget("smartChat", {
-	data: data,
-	onFinish: callChatEnded
+	data: data, //static template data
+	onFinish: callChatEnded, //if nextQsId === null then conversation is completed
+	initialQs: "1", //Qs property value
+	delay : 500 //default 800ms
 });
 
 $.container.add(smartChat.getView());

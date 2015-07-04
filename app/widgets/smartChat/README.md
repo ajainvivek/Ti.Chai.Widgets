@@ -3,11 +3,11 @@ Smart Chart Interactive Chat widget for Appcelerator Studio. It's still in Beta 
 
 It can be used across in various scenarios such as long form filling with conditional flow, interactive feedback and to collect various information via chat mechanism.  
 
-I would also love some one to contribute in an intelligent chat component i.e something similar to SIRI in future.
+Please feel free to contribute.
 
 It comprises of strict data structure in order to traverse through the flow. Will be shortly updating with video cast explaining the flow.
 
-![image](docs/smartChat.gif?raw=true)
+![image](http://oi57.tinypic.com/24fzkhf.jpg?raw=true)
 
 ## Installation
 
@@ -118,11 +118,17 @@ JsonEditor: http://jsoneditoronline.org/?id=797fc06b44aa777dd4199c06837bbe66
 
 ## Usage
 ```javascript
-var smartChat = Widget.createWidget('smart', {
-	data : data,
-	onFinish : onFinish
+var smartChat = Alloy.createWidget("smartChat", {
+	data: data, //static conversational template data
+	onFinish: callChatEnded, //if nextQsId === undefined then conversation is completed
+	initialQs: "1", //Qs property value
+	delay : 500 //default 800ms
 });
 ```
+**Properties**
+* **data**: static conversational template data
+* **initialQs**: Set first question property value
+* **delay**: delay for each question to appear 
 
 **Functions**
 * **onFinish**: on conversational flow is finished trigger callback
