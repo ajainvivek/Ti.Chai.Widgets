@@ -1,5 +1,5 @@
 # smartChat - Interactive Chat Widget
-Smart Chart Interactive Chat widget for Appcelerator Studio. It's still in Beta Version.
+Smart Chat is an Interactive Chat widget for Appcelerator Studio. It's still in Beta Version.
 
 It can be used across in various scenarios such as long form filling with conditional flow, interactive feedback and to collect various information via chat mechanism.  
 
