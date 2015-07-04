@@ -53,7 +53,7 @@ var data = {
 				},
 				"format" : ""
 			},
-			"nextQsId" : "4",
+			"nextQsId" : "6",
 			"repeat" : 0
 		},
 		"4" : {
@@ -96,6 +96,7 @@ var data = {
 	};
 
 var callChatEnded = function (responseObj) {
+	console.log(responseObj);
 	alert("Chat completed");
 };
 

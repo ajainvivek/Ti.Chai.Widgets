@@ -226,7 +226,8 @@ exports.module = (function () {
 				bubble.setBorderColor("green");
 				self.triggerAnswerControl(qs, {
 					label : label,
-					bubble : bubble
+					bubble : bubble,
+					guid : options.guid
 				});
 			});
 		}
@@ -358,7 +359,7 @@ exports.module = (function () {
 		} else {
 			this.inputContainer.removeAllChildren();
 			this.isCompleted = true;
-			this.onFinish(); //Chat conversation is completed
+			this.onFinish(dataInstance.response); //Chat conversation is completed
 		}
 	};
 	
@@ -381,11 +382,11 @@ exports.module = (function () {
 			}
 			return;
 		}
-		
 		var answer = this._buildMessageRow({
 			msg : obj.text,
 			type : "User",
-			id : currQs.id
+			id : currQs.id,
+			guid: obj.guid
 		});
 		this.tableView.appendRow(answer);
 		this._rows.push(answer);
@@ -412,11 +413,14 @@ exports.module = (function () {
 				var inputControl = this._buildInputControl({
 					type: currQs.validate ? currQs.validate.type : "default",
 					success: function (val) {
+						var guid = src ? src.guid : undefined;
+						var updateAnswer = dataInstance.updateAnswer(currQs.id, val, guid);
 						self.renderAnswer({
 							text: val,
 							nxtQsId: currQs.nextQsId,
 							src: src,
-							id: currQs.id
+							id: currQs.id,
+							guid: updateAnswer.guid
 						});
 					},
 					help: function () {
@@ -434,11 +438,14 @@ exports.module = (function () {
 				var btnControl = this._buildButtonControl({
 					data: currQs.options,
 					success: function (option) {
+						var guid = src ? src.guid : undefined;
+						var updateAnswer = dataInstance.updateAnswer(currQs.id, option.value, guid);
 						self.renderAnswer({
 							text: option.value,
 							nxtQsId: option.nextQsId ? option.nextQsId : currQs.nextQsId,
 							src: src,
-							id: currQs.id
+							id: currQs.id,
+							guid: updateAnswer.guid
 						});
 					},
 					help: function () {
@@ -452,11 +459,14 @@ exports.module = (function () {
 				var pickerControl = this._buildPickerControl({
 					type: currQs.validate.type,
 					success: function (val) {
+						var guid = src ? src.guid : undefined;
+						var updateAnswer = dataInstance.updateAnswer(currQs.id, val, guid);
 						self.renderAnswer({
 							text: val,
 							nxtQsId: currQs.nextQsId,
 							src: src,
-							id: currQs.id
+							id: currQs.id,
+							guid: updateAnswer.guid
 						});
 					},
 					validate: currQs.validate

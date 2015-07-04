@@ -1,3 +1,4 @@
+var helper = Alloy.createWidget('smartChat', 'helper').module;
 /***
  * @class: Data Interface Class
  * @extends: Helper Class
@@ -9,6 +10,7 @@ exports.module = (function () {
 		this.prevQuestion = {};	
 		this.summary = [];
 		this.data = {};
+		this.response = [];
 	};
 	
 	/***
@@ -65,8 +67,27 @@ exports.module = (function () {
 	 * @desc Updates the answer based on the qs id
 	 * @param {String} id - question id
 	 */
-	DataInterface.prototype.updateAnswer = function (id, answer) {
-		
+	DataInterface.prototype.updateAnswer = function (id, answer, guid) {
+		var obj = {};
+		var guid = guid;
+		if (!guid) { //if normal flow
+			guid = helper.generateGUID();
+			obj.qid = id;
+			obj.guid = guid;
+			obj.answer = answer;
+			this.response.push(obj);
+		} else { //edit qs
+			var response = _.map(this.response, function (obj) {
+				if (obj.guid === guid) {
+					obj.answer = answer;
+				}
+				return obj;
+			});
+			this.response = response;
+		}
+		return {
+			guid : guid
+		};
 	};
 	
 	/***
