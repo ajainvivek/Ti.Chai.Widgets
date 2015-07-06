@@ -4,6 +4,8 @@ randomTiles is animated tiles with search filter and delete option. It's still i
  
 Please feel free to contribute.
 
+![image](http://oi58.tinypic.com/1hc743.jpg?raw=true)
+
 ## Installation
 
 ## Data Structure 
