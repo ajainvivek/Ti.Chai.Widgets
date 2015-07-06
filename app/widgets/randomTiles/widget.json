@@ -1,0 +1,13 @@
+{
+	"id": "randomTiles",
+	"name": "randomTiles",
+	"description" : "randomTiles is animated tiles with search filter.",
+	"author": "Ajain Vivek",
+	"version": "1.0",
+	"copyright":"Copyright (c) 2015",
+	"license":"Public Domain",
+	"min-alloy-version": "1.0",
+	"min-titanium-version":"2.1",
+	"tags":"grid tiles, isotope, tile layout",
+	"platforms":"android,ios"
+}

@@ -1,0 +1,46 @@
+/********  Hero Container ***********/
+"#heroContainer": {
+	"contentHeight":Ti.UI.FILL,
+	"contentWidth":Ti.UI.FILL,
+	"height": Ti.UI.FILL,
+	"width": Ti.UI.FILL,
+	"layout": "horizontal"
+},
+
+/********  Tile Container ***********/
+".tile": {
+	"id" : "tile",
+	"height": "160dp",
+	"width": "120dp",
+	"backgroundColor": "#fff",
+	"opacity": 0,
+	"top" : 5,
+	"bottom" : 5
+},
+".image": {
+	"height" : "120dp",
+	"width" : "120dp",
+	"top" : "0dp"
+},
+".text-container" : {
+	"top" : "120dp",
+	"left" : "0dp",
+	"backgroundColor": "#ccc"
+},
+".text" : {
+	"font" : {
+		"fontSize" : 12 
+	}
+},
+".close" : {
+	"id" : "close",
+	"title" : "X",
+	"right" : 5,
+	"top" : 5,
+	"zIndex" : 10,
+	"height" : "20dp",
+	"width" : "20dp",
+	"backgroundColor" : "#ccc",
+	"borderRadius" : "10dp",
+	"color" : "#000"
+}

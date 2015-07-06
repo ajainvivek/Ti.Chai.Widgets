@@ -1,6 +1,6 @@
 <Alloy>
 	<NavigationWindow platform="ios" title="randomTiles" id="randomTiles">
-		<Window>
+		<Window id="container">
 			<LeftNavButton>
 				<Button onClick="closeWindow">Back</Button>
 			</LeftNavButton>
