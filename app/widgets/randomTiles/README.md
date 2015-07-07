@@ -40,16 +40,21 @@ var randomTiles = Alloy.createWidget("randomTiles", {
 	onClick : function(data) { //Callback on tile click
 		alert("tile clicked " + data.id);
 	},
-	isDelete : true // Default is false
+	isDelete : true, // Default is false,
+	isSearch : true // Default is true
 });
+
+randomTiles.setData(data); //Pass new set of data to refresh the content
 ```
 **Properties**
 * **data**: array of tile data
 * **tile**: tile properties with style attributes
 * **isDelete**: tile delete option
+* **isSearch**: search option for tiles to filter
 
 **Functions**
 * **onClick**: on tile click trigger callback
+* **setData**: reset the data
 
 ##Notes
 * Any bugs please raise a ticket

@@ -43,4 +43,8 @@
 	"backgroundColor" : "#ccc",
 	"borderRadius" : "10dp",
 	"color" : "#000"
+},
+".searchbar" : {
+	height : "43",
+	top : "0"
 }

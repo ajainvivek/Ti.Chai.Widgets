@@ -1,5 +1,4 @@
 <Alloy>
 	<ScrollView id="heroContainer">
-		<SearchBar id="search" hintText="Search" height="43" top="0" />
 	</ScrollView>
 </Alloy>

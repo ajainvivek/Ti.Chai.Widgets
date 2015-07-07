@@ -31,7 +31,8 @@ var randomTiles = Alloy.createWidget("randomTiles", {
 	onClick : function(data) {
 		alert("tile clicked " + data.id);
 	},
-	isDelete : true // Default is false
+	isDelete : true, // Default is false
+	isSearch : true // Deafult is true
 });
 
 $.container.add(randomTiles.getView());

@@ -1,15 +1,23 @@
 var args = arguments[0];
 var scrollView = $.heroContainer;
 var data = args.data;
-var onClick = args.onClick || function () {};
+var onClick = args.onClick || function() {
+};
 var isDelete = args.isDelete || false;
+var isSearch = args.isSearch || true;
 
 /**
  * class: randomTiles
  */
 var randomTiles = (function() {
+	var tiles = [];
+	var tmpData = _.clone(data);
 
-	// _getStyles
+	/***************************************************************************
+	 * @method _getStyle
+	 * @desc Provides map of styles
+	 * @return {Object} map of styles
+	 */
 	var _getStyle = function() {
 		var style = {
 			tile : $.createStyle({
@@ -26,12 +34,19 @@ var randomTiles = (function() {
 			}),
 			close : $.createStyle({
 				classes : [ 'close' ]
+			}),
+			search : $.createStyle({
+				classed : [ 'searchbar' ]
 			})
 		};
 		return style;
 	};
 
-	// _calcOffset
+	/***************************************************************************
+	 * @method _calcOffset
+	 * @desc Calculates the offset position
+	 * @return {Numeric} offset value btw tiles
+	 */
 	var _calcOffset = function(tile) {
 		var wContainer = scrollView.toImage().width;
 		var index = 0;
@@ -47,22 +62,21 @@ var randomTiles = (function() {
 		var offset = (wContainer - (wTile * (index - 1))) / ((index - 1) * 2);
 		return offset;
 	};
-	
-	// _applyAnimation
-	var _applyAnimation = function(tile) {
-		
-	};
 
-	// _getTile
+	/***************************************************************************
+	 * @method _getTile
+	 * @desc Build the tile with title and image
+	 * @return {Object} tile view
+	 */
 	var _getTile = function(data) {
 		var style = _getStyle();
 
 		var tile = Ti.UI.createView();
 		tile.applyProperties(style["tile"]);
-		
+
 		var close = Ti.UI.createButton();
 		close.applyProperties(style["close"]);
-		
+
 		var image = Ti.UI.createImageView({
 			image : data.image
 		});
@@ -86,55 +100,102 @@ var randomTiles = (function() {
 		tile.add(close);
 		tile.add(image);
 		tile.add(textContainer);
-		
-		//delete event listener
-		close.addEventListener("click", function (e) {
+
+		tiles.push(tile);
+
+		// delete event listener
+		close.addEventListener("click", function(e) {
+			var selectedIndex = _.indexOf(tiles, tile);
 			if (e.source.id === "close") {
-				tile.animate({ 
-			        curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT, 
-			        opacity: 0, 
-			        duration: 800
-			    }, function () {
-			    	scrollView.remove(tile);
-			    });
+				tile.animate({
+					curve : Ti.UI.ANIMATION_CURVE_EASE_IN_OUT,
+					opacity : 0,
+					duration : 80
+				}, function() {
+					tmpData.splice(selectedIndex, 1); // Remove from data
+					if (tmpData.length === selectedIndex) {
+						scrollView.remove(tile);
+					} else {
+						setData(tmpData);
+					}
+				});
 			}
 		});
-		
-		//tile on click event listener
-		tile.addEventListener("click", function (e) {
+
+		// tile on click event listener
+		tile.addEventListener("click", function(e) {
 			if (e.source.id === "tile") {
 				onClick(data);
 			}
 		});
-		
-		//show animation
+
+		// show animation
 		var showAnimation = Titanium.UI.createAnimation({
-		    curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT,
-		    opacity: 1,
-		    duration: 800
+			curve : Ti.UI.ANIMATION_CURVE_EASE_IN_OUT,
+			opacity : 1,
+			duration : 800
 		});
-		
+
 		tile.animate(showAnimation);
 
 		return tile;
 	};
 
-	// _buildTiles
-	var _buildTiles = function() {
+	/***************************************************************************
+	 * @method _search
+	 * @desc Bind search event and add search bar
+	 */
+	var _search = function() {
+		var search = Ti.UI.createSearchBar({
+			hintText : "Search"
+		});
+		var style = _getStyle();
+		search.applyProperties(style["search"]);
+		search.addEventListener("change", function(e) {
+			var filter = _.filter(tmpData, function(data) {
+				var title = data.title.toLowerCase();
+				var isMatched = (title.match(e.value) !== null) ? true : false;
+				return isMatched;
+			});
+			setData(filter);
+		});
+		scrollView.add(search);
+	};
+
+	/***************************************************************************
+	 * @method _buildTiles
+	 * @desc Builds the tile layout
+	 * @param data 
+	 */
+	var _buildTiles = function(data) {
 		_.each(data, function(item) {
 			var tile = _getTile(item);
 			scrollView.add(tile);
 		});
 	};
 
-	// setData
-	var setData = function(collection) {
+	/***************************************************************************
+	 * @method setData
+	 * @desc refresh the ui tiles with data
+	 * @data data
+	 */
+	var setData = function(data) {
+		// Reset UI & Tiles array
+		_.each(tiles, function(tile) {
+			scrollView.remove(tile);
+		});
+		tiles = [];
 
+		// Reset UI
+		_buildTiles(data);
 	};
 
 	// Initialize method
 	var init = function() {
-		_buildTiles();
+		if (isSearch) { // If search then inject
+			_search();
+		}
+		_buildTiles(tmpData);
 	};
 
 	return {
