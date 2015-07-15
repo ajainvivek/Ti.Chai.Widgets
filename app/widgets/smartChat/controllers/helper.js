@@ -64,11 +64,17 @@ exports.module = (function() {
 
 		// validate is numeric
 		var _isNumeric = function(val) {
-			if (!isNaN(val)) {
+			if (!isNaN(parseInt(val)) && !_isSpecialChars(val)) {
 				return true;
 			}
 			message += "Please enter numeric value \n";
 			return false;
+		};
+
+		// validate is special characters
+		var _isSpecialChars = function(val) {
+			var pattern = /^[a-zA-Z0-9- ]*$/;
+			return !pattern.test(val);
 		};
 
 		// validate is string

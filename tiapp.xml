@@ -6,7 +6,7 @@
     <publisher>avivek</publisher>
     <url>http://www.chaicode.com</url>
     <description>undefined</description>
-    <copyright>2015 by avivek</copyright>
+    <copyright>2015 by Ajain Vivek</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
@@ -40,7 +40,7 @@
     </ios>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
     	<manifest>
-	        <uses-sdk android:targetSdkVersion="19"/>
+	        <uses-sdk android:targetSdkVersion="21"/>
 	        <!-- other manifest entries -->
 	    </manifest>
     </android>
