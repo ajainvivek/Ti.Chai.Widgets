@@ -6,4 +6,6 @@
 			</LeftNavButton>
 		</Window>
 	</NavigationWindow>
+	<Window id="container" platform="android">
+	</Window>	
 </Alloy>
