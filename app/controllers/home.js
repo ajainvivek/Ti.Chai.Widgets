@@ -7,7 +7,10 @@ var onItemClick = function(e) {
 			break;
 		case 1:
 			Alloy.createController('randomTiles').getView().open();
-			break;	
+			break;
+		case 2:
+			Alloy.createController('preloader').getView().open();
+			break;
 		default:
 			Ti.API.error("Invalid option!!!");
 			break;

@@ -9,6 +9,7 @@
     "os:windows": {},
     "dependencies": {
         "smartChat": "1.0",
-        "randomTiles": "1.0"
+        "randomTiles": "1.0",
+        "preloader": "1.0"
     }
 }

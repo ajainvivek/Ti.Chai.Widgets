@@ -1,0 +1,11 @@
+<Alloy>
+	<NavigationWindow platform="ios" title="preloader" id="preloader">
+		<Window id="container">
+			<LeftNavButton>
+				<Button onClick="closeWindow">Back</Button>
+			</LeftNavButton>
+		</Window>
+	</NavigationWindow>
+	<Window id="container" platform="android">
+	</Window>
+</Alloy>

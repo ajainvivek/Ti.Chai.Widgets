@@ -7,6 +7,9 @@
 			<ListSection headerTitle="Random Tiles">
 				<ListItem class="list-item" title="Random animated tiles"/>
 			</ListSection>
+			<ListSection headerTitle="Preloader">
+				<ListItem class="list-item" title="Progress Indicator"/>
+			</ListSection>
 		</ListView>
 	</Window>
 </Alloy>

@@ -1,0 +1,22 @@
+".window": {
+	"backgroundColor": "#000",
+	"contentHeight": Ti.UI.FILL,
+	"contentWidth": Ti.UI.FILL,
+	"height": Ti.UI.FILL,
+	"width": Ti.UI.FILL,
+	"opacity": 0.3,
+	"zIndex": 999999,
+	"navBarHidden": true
+},
+".label": {
+	"text" : "Loading",
+	"top" : 40,
+	"color" : "#fff",
+	"font" : {
+		"fontSize" : 12
+	}
+},
+".view" : {
+	"height" : Titanium.UI.SIZE,
+	"width" : Titanium.UI.SIZE
+}
