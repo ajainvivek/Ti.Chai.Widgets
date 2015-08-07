@@ -1,4 +1,4 @@
-# preloader - Loader indicator
+# preloader - Progress indicator
 Preloader is loading indicator with highly configurable options.
 
 Please feel free to contribute.
