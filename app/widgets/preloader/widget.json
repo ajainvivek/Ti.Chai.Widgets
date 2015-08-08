@@ -1,13 +1,13 @@
 {
 	"id": "preloader",
 	"name": "preloader",
-	"description" : "",
-	"author": "",
+	"description" : "Progress Indicator with highly configurable options.",
+	"author": "Ajain Vivek",
 	"version": "1.0",
 	"copyright":"Copyright (c) 2015",
 	"license":"Public Domain",
 	"min-alloy-version": "1.0",
 	"min-titanium-version":"2.1",
-	"tags":"",
+	"tags":"progress indicator, loader",
 	"platforms":"android,ios"
 }
