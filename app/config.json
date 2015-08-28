@@ -10,6 +10,7 @@
     "dependencies": {
         "smartChat": "1.0",
         "randomTiles": "1.0",
-        "preloader": "1.0"
+        "preloader": "1.0",
+        "slideFilters": "1.0"
     }
 }

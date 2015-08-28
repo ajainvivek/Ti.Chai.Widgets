@@ -10,6 +10,9 @@
 			<ListSection headerTitle="Preloader">
 				<ListItem class="list-item" title="Progress Indicator"/>
 			</ListSection>
+			<ListSection headerTitle="Slide Filters">
+				<ListItem class="list-item" title="Slide Filters"/>
+			</ListSection>
 		</ListView>
 	</Window>
 </Alloy>

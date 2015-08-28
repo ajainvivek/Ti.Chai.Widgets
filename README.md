@@ -7,5 +7,4 @@ Widgets currently in the repository;
 1. smartChart - Interactive Chat Widget
 2. randomTiles - Animated Tiles (Works in iOS)
 3. preloader - Progress Indicator 
-
-![image](docs/ChaiWidgets.png?raw=true)
+4. slideFilters - Easily configurable slide multi and single select filters

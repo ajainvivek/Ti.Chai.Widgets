@@ -11,6 +11,9 @@ var onItemClick = function(e) {
 		case 2:
 			Alloy.createController('preloader').getView().open();
 			break;
+		case 3:
+			Alloy.createController('slideFilters').getView().open();
+			break;
 		default:
 			Ti.API.error("Invalid option!!!");
 			break;

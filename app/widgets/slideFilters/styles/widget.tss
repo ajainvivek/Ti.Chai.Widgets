@@ -1,0 +1,19 @@
+".overlayContainer" : {
+	backgroundImage : WPATH("overlay-transparent.png")
+}
+
+".header" : {
+	height : 40,
+	backgroundColor : "#ccc"
+}
+
+".item" : {
+	height : 50,
+	backgroundColor : "#fff"
+}
+
+".border" : {
+	height : 1,
+	width : Titanium.UI.FILL,
+	backgroundColor : "#ccc"
+}

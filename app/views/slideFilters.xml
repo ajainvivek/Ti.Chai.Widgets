@@ -1,0 +1,11 @@
+<Alloy>
+	<NavigationWindow platform="ios" title="Slide Filters" id="slideFilters">
+		<Window id="container">
+			<LeftNavButton>
+				<Button onClick="closeWindow">Back</Button>
+			</LeftNavButton>
+		</Window>
+	</NavigationWindow>
+	<Window id="container" platform="android">
+	</Window>
+</Alloy>

@@ -1,0 +1,13 @@
+{
+	"id": "slideFilters",
+	"name": "slideFilters",
+	"description" : "appcelerator widget - slideFilters is easily configurable filters with multi and sinlge select options",
+	"author": "Ajain Vivek",
+	"version": "1.0",
+	"copyright":"Copyright (c) 2015",
+	"license":"Public Domain",
+	"min-alloy-version": "1.0",
+	"min-titanium-version":"2.1",
+	"tags":"filters, slide, slide filters, widgets, easily confiugurable",
+	"platforms":"android,ios"
+}

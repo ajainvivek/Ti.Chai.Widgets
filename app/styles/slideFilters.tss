@@ -1,0 +1,15 @@
+
+"#container" : {
+	height : Titanium.UI.FILL,
+	width : Titanium.UI.FILL
+}
+
+"#container[platform=ios]" : {
+	height : Titanium.UI.FILL,
+	width : Titanium.UI.FILL
+}
+
+"#slideFilters" : {
+	height : Titanium.UI.FILL,
+	width : Titanium.UI.FILL
+}
