@@ -51,8 +51,9 @@ window.addEventListener("open", function () { //make sure the widget is instanti
     },
     data : data, //checkbox/radio array
     slide : "right", //right/left slide
-    applyFilters : function (filters) {
+    applyFilters : function (filters, type) {
         console.log(filters); // [{id : 1, label : "Red", selected : true}]
+        console.log(type); //multi || single
     }
   });
 });

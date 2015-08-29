@@ -164,7 +164,7 @@ var slideFilters = (function() {
 				}
 				
 				filters.push(item);
-				applyFilters(filters);
+				applyFilters(filters, "multi");
 				filters = [];
 			});
 			
@@ -242,7 +242,7 @@ var slideFilters = (function() {
 					e.source.setImage(WPATH("selected.png"));
 				}
 				
-				applyFilters(filters);
+				applyFilters(filters, "single");
 			});
 			
 			
