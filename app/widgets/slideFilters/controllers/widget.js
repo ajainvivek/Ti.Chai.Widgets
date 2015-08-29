@@ -163,11 +163,17 @@ var slideFilters = (function() {
 					e.source.setImage(WPATH("unchecked.png"));
 				}
 				
-				filters.push(item);
-				applyFilters(filters, "multi");
-				filters = [];
+				var freshData = _.map(filters, function (filter) {
+					if (filter.id === item.id) {
+						filter = item;
+					}
+					return filter;
+				});
+				applyFilters(freshData, "multi");
 			});
 			
+			item.selected = false;
+			filters.push(item);
 			filterImgs.push(checkImage);
 			filterItems.push(item);
 			checkView.add(checkLabel);
