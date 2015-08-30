@@ -154,13 +154,13 @@ var slideFilters = (function() {
 			var checkBorder = Ti.UI.createView();
 			checkBorder.applyProperties(style.border);
 			
-			checkImage.addEventListener("click", function (e) {
+			checkView.addEventListener("click", function (e) {
 				item.selected = item.selected ? false : true;
 				
 				if (item.selected) {
-					e.source.setImage(WPATH("checked.png"));
+					checkImage.setImage(WPATH("checked.png"));
 				} else {
-					e.source.setImage(WPATH("unchecked.png"));
+					checkImage.setImage(WPATH("unchecked.png"));
 				}
 				
 				var freshData = _.map(filters, function (filter) {
@@ -170,6 +170,14 @@ var slideFilters = (function() {
 					return filter;
 				});
 				applyFilters(freshData, "multi");
+			});
+			
+			checkView.addEventListener("touchstart", function (e) {
+				e.source.setBackgroundColor("#EFEFEF");
+			});
+			
+			checkView.addEventListener("touchend", function (e) {
+				e.source.setBackgroundColor("#FFF");
 			});
 			
 			item.selected = false;
@@ -239,16 +247,24 @@ var slideFilters = (function() {
 			var radioBorder = Ti.UI.createView();
 			radioBorder.applyProperties(style.border);
 			
-			radioImage.addEventListener("click", function (e) {
+			radioView.addEventListener("click", function (e) {
 				_resetFilters(filters);
 				item.selected = item.selected ? false : true;
 				
 				if (item.selected) {
 					_resetBg(images);
-					e.source.setImage(WPATH("selected.png"));
+					radioImage.setImage(WPATH("selected.png"));
 				}
 				
 				applyFilters(filters, "single");
+			});
+			
+			radioView.addEventListener("touchstart", function (e) {
+				e.source.setBackgroundColor("#EFEFEF");
+			});
+			
+			radioView.addEventListener("touchend", function (e) {
+				e.source.setBackgroundColor("#FFF");
 			});
 			
 			
