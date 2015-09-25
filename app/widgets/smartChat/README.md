@@ -7,7 +7,7 @@ Please feel free to contribute.
 
 It comprises of strict data structure in order to traverse through the flow. Will be shortly updating with video cast explaining the flow.
 
-![image](http://oi57.tinypic.com/24fzkhf.jpg?raw=true)
+![image](http://i.imgur.com/YkmHHSM.gif?raw=true)
 
 ## Installation
 
