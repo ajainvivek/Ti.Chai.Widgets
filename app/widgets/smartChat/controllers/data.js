@@ -91,6 +91,20 @@ exports.module = (function () {
 	};
 	
 	/***
+	 * @method removeAllAnswers
+	 * @desc Removes all the answer from specific index
+	 * @param {String} guid - uinque id
+	 */
+	DataInterface.prototype.removeAllAnswers = function (guid) {
+		var obj = _.findWhere(this.response, {
+			guid : guid
+		});
+		var index = _.indexOf(this.response, obj);
+		var length = this.response.length;
+		this.response.splice(index + 1, length - index + 1);
+	};
+	
+	/***
 	 * @method update
 	 * @desc Updates the next/prev/curr qs
 	 */

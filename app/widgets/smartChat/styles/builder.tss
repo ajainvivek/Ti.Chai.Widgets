@@ -91,7 +91,8 @@
 	"suppressReturn": "false",
 	"width": Ti.UI.FILL,
 	"paddingLeft": "5dp",
-	"backgroundColor": "#5f6056",
+	"backgroundColor": "#CCC",
+	"borderRadius" : 5,
 	"opacity": 0.8
 },
 
@@ -137,4 +138,8 @@
 
 ".rightAligned":{
 	"right": "60dp"
+}
+
+".inputContainer" : {
+	"bottom": "-200dp"
 }

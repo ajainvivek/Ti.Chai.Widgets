@@ -30,6 +30,7 @@ JsonEditor: http://jsoneditoronline.org/?id=797fc06b44aa777dd4199c06837bbe66
         "nextQsId": "6"
       }
     ],
+    "isBranched": true,
     "nextQsId": "2",
     "help": "Choose valid gender",
     "repeat": 0
@@ -132,6 +133,9 @@ var smartChat = Alloy.createWidget("smartChat", {
 
 **Functions**
 * **onFinish**: on conversational flow is finished trigger callback
+
+**Version Updates**
+* **1.2**: Added Branching + Added Programmtic Loader + Added InputContainer Slide Animation
 
 ##Notes
 * Any bugs please raise a ticket

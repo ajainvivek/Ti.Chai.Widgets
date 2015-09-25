@@ -25,11 +25,9 @@ var init = function() {
 	Ti.App.addEventListener('keyboardframechanged', function(e) {
 		if (e.keyboardFrame.y < Ti.Platform.displayCaps.platformHeight) {
 			/* Keyboard is showing up */
-			scrollView.scrollTo(0, e.keyboardFrame.height);
 			inputContainer.setBottom(e.keyboardFrame.height);
 		} else {
 			/* Keyboard is leaving the screen */
-			scrollView.scrollToBottom();
 			inputContainer.setBottom(0);
 		}
 	});

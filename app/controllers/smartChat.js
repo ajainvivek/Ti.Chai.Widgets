@@ -17,6 +17,7 @@ var data = {
 				"value" : "female",
 				"nextQsId" : "6"
 			} ],
+			"isBranched" : true,
 			"nextQsId" : "2",
 			"help" : "Choose valid gender",
 			"repeat" : 0
@@ -39,6 +40,20 @@ var data = {
 			},
 			"help" : "Choose valid gender",
 			"nextQsId" : "3",
+			"isBranched" : true,
+			"branch" : [{
+				"answer" : {
+					"min" : 2,
+					"max" : 10
+				},
+				"nextQsId" : "1"
+			}, {
+				"answer" : {
+					"min" : 20,
+					"max" : 30
+				},
+				"nextQsId" : "6"
+			}],
 			"repeat" : 0
 		},
 		"3" : {
@@ -104,7 +119,7 @@ var smartChat = Alloy.createWidget("smartChat", {
 	data: data, //static template data
 	onFinish: callChatEnded, //if nextQsId === null then conversation is completed
 	initialQs: "1", //Qs property value
-	delay : 500 //default 800ms
+	delay : 2000 //default 800ms
 });
 
 $.container.add(smartChat.getView());

@@ -13,7 +13,7 @@ exports.module = (function() {
 	/***************************************************************************
 	 * @method: generateGUID
 	 */
-	var generateGUID = function () {
+	var generateGUID = function() {
 		function s4() {
 			return Math.floor((1 + Math.random()) * 0x10000).toString(16)
 					.substring(1);
@@ -38,6 +38,122 @@ exports.module = (function() {
 		};
 
 		return keyboardMap[type];
+	};
+	
+	/**
+	 * @method animateTop
+	 */
+	var animateTop = function (view) {
+		var animation = Ti.UI.createAnimation({
+			bottom : "0dp",
+			duration : 800,
+			curve : Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+		});
+		view.animate(animation);
+	};
+
+	/**
+	 * @method loader
+	 * @param options
+	 *            {Object} { dots : Number, repeat : Number, delay :
+	 *            Milliseconds, spacing : DP, callback : Function }
+	 */
+	var loader = function(options) {
+		var options = options || {};
+		var dots = options.dots || 3;
+		var repeat = options.repeat || null;
+		var delay = options.delay || 150;
+		var spacing = options.spacing || 20;
+		var size = options.size || 14;
+		var callback = options.complete || function() {
+		};
+		var offColor = (options.color && options.color.off) || "#AFD2E3";
+		var onColor = (options.color && options.color.on) || "#6D97B2";
+		var isRandom = (options.color && options.color.random) || false;
+		var highlight;
+		var circles = [];
+		var outerView = Titanium.UI.createView({
+			"height" : 25,
+			"width" : 60,
+			"top" : 10,
+			"left" : 20
+		});
+
+		var getCircle = function() {
+			return Titanium.UI.createView({
+				visible : false,
+				height : size,
+				width : size,
+				top : 0,
+				borderRadius : size / 2,
+				backgroundColor : isRandom ? getRandomColor() : offColor
+			});
+		};
+
+		for ( var i = 0; i < dots; i++) {
+			var circle = getCircle();
+			circle.setLeft(i * spacing);
+			outerView.add(circle);
+			circles.push(circle);
+		}
+
+		// Show circle in sequence
+		var displayCircles = (function displayCircle(i) {
+			setTimeout(function() {
+				circles[dots - i].setVisible(true);
+				if (--i) {
+					displayCircle(i);
+					if (i === 1) {
+						highlightCircles(repeat);
+					}
+				}
+			}, delay);
+		}(dots));
+
+		// Reset Circle Background
+		var _resetCircleBgColor = function() {
+			for ( var i = 0; i < dots; i++) {
+				circles[i].setBackgroundColor(offColor);
+			}
+		};
+
+		// Highlight based on repeat
+		var highlightCircles = function highlightCircle(repeat) {
+			var counter = dots;
+			highlight = setInterval(function() {
+				if (counter === 0) {
+					counter = dots;
+					if (repeat !== null) {
+						clearInterval(highlight);
+					}
+					if (repeat > 1 && repeat !== null) {
+						highlightCircle(repeat - 1); // Recursively
+					}
+					if (repeat === 1 && repeat !== null) {
+						outerView.hide();
+						callback(); // On finish of loading
+					}
+					return;
+				}
+				if (!isRandom) {
+					_resetCircleBgColor();
+				}
+				circles[dots - counter]
+						.setBackgroundColor(isRandom ? getRandomColor()
+								: onColor);
+				counter--;
+			}, delay);
+		};
+
+		var clear = function() {
+			clearInterval(highlight);
+		};
+
+		return {
+			content : outerView,
+			clear : clear
+		};
+
 	};
 
 	/***************************************************************************
@@ -197,6 +313,8 @@ exports.module = (function() {
 		snatchFocus : snatchFocus,
 		keyboardTypeMap : keyboardTypeMap,
 		inputValidate : inputValidate,
-		generateGUID : generateGUID
+		generateGUID : generateGUID,
+		animateTop : animateTop,
+		loader : loader
 	};
 }());

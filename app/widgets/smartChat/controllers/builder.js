@@ -92,9 +92,7 @@ exports.module = (function () {
 		var self = this;
 		var keyboardType = helper.keyboardTypeMap(options.type);
 		
-		var inputContainer = Ti.UI.createView({
-			backgroundColor: "#4e4f47"
-		});
+		var inputContainer = Ti.UI.createView();
 		inputContainer.applyProperties(self._style.inputContainer);
 		
 		var picker = Ti.UI.createPicker({
@@ -149,9 +147,7 @@ exports.module = (function () {
 		var self = this;
 		var keyboardType = helper.keyboardTypeMap(options.type);
 		
-		var inputContainer = Ti.UI.createView({
-			backgroundColor: "#4e4f47"
-		});
+		var inputContainer = Ti.UI.createView();
 		inputContainer.applyProperties(self._style.inputContainer);
 		
 		var inputField = Ti.UI.createTextField({
@@ -222,13 +218,45 @@ exports.module = (function () {
 			//Add event on bubble click for inline edit
 			bubble.addEventListener("click", function (e) {
 				var qs = dataInstance.getData()[options.id];
-				bubble.setBorderWidth("1dp");
-				bubble.setBorderColor("green");
-				self.triggerAnswerControl(qs, {
-					label : label,
-					bubble : bubble,
-					guid : options.guid
+				var opts = {
+					cancel: 1,
+					options: ['Confirm', 'Cancel'],
+					selectedIndex: 1,
+					destructive: 0,
+					title: 'Editing branched question will clear below answers ?'
+				};
+				var dialog = Ti.UI.createOptionDialog(opts);
+				dialog.addEventListener("click", function (e) {
+					if(e.index === 0) {
+						var index = _.indexOf(self._rows, row);
+						var length = self._rows.length;
+						var spliced = self._rows.splice(index + 1, length - index + 1);
+						dataInstance.removeAllAnswers(options.guid);
+						_.each(spliced, function (row) {
+							self.tableView.deleteRow(row, {
+								animationStyle : Titanium.UI.iPhone.RowAnimationStyle.FADE
+							});
+						});
+						bubble.setBorderWidth("1dp");
+						bubble.setBorderColor("green");
+						self.triggerAnswerControl(qs, {
+							label : label,
+							bubble : bubble,
+							guid : options.guid
+						});
+					}
 				});
+				if (options.isBranched) {
+					dialog.show();
+				} else {
+					bubble.setBorderWidth("1dp");
+					bubble.setBorderColor("green");
+					self.triggerAnswerControl(qs, {
+						label : label,
+						bubble : bubble,
+						guid : options.guid
+					});
+				}
 			});
 		}
 		
@@ -238,18 +266,6 @@ exports.module = (function () {
 		row.add(outerBubble);
 		
 		return row;
-	};
-	
-	/***
-	 * @method _spinnerAnimate
-	 * @desc Animate the spinner 
-	 */
-	UIBuilder.prototype._spinnerAnimate = function (loader) {
-		loader.image = WPATH("spinner/frame_" + this.loaderIndex + ".png");
-		this.loaderIndex++;
-		if (this.loaderIndex === 23) {
-			this.loaderIndex = 0;
-		}
 	};
 	
 	/***
@@ -264,21 +280,24 @@ exports.module = (function () {
 		var outerBubble = Ti.UI.createView();
 		outerBubble.applyProperties(self._style.outerBubble);
 		
-		var spinner = Ti.UI.createImageView();
-		spinner.applyProperties(self._style["bubbleSpinner"]); 	 
+		var bubble = Ti.UI.createView();
+		bubble.applyProperties(self._style["bubbleBot"]); 
 		
-		//Animate the gif
-		this.loaderIndex = 0;
-		var loaderAnimate = setInterval(function () {
-			self._spinnerAnimate(spinner);
-		}, 80);
+		var preloader = helper.loader({
+			delay : 100,
+			dots : 3,
+			color : {
+				on : "#FFFFFF",
+				off : "#CCCCCC"
+			}
+		});
 		
 		//Clear Interval
 		setTimeout(function () {
-			clearInterval(loaderAnimate);
-		}, this.delay); 		
-		
-		outerBubble.add(spinner);
+			preloader.clear();
+		}, this.delay);
+		outerBubble.add(bubble);
+		bubble.add(preloader.content);
 		row.add(outerBubble);
 		
 		return row;
@@ -355,6 +374,7 @@ exports.module = (function () {
 	UIBuilder.prototype._triggerDependentQuestion = function (obj) {
 		if (obj.nxtQsId !== undefined) {
 			dataInstance.update(obj.nxtQsId);
+			this.isCompleted = false;
 			this.renderQuestion();
 		} else {
 			this.inputContainer.removeAllChildren();
@@ -377,8 +397,8 @@ exports.module = (function () {
 			obj.src.bubble.setBorderWidth("0dp");
 			obj.src.bubble.setBorderColor("transparent");
 			this.inputContainer.removeAllChildren();
-			if (!this.isCompleted) { //Check if all qs are asked
-				this.triggerAnswerControl(currQs);
+			if (!this.isCompleted || obj.nxtQsId) { //Check if all qs are asked
+				this._triggerDependentQuestion(obj);
 			}
 			return;
 		}
@@ -386,7 +406,8 @@ exports.module = (function () {
 			msg : obj.text,
 			type : "User",
 			id : currQs.id,
-			guid: obj.guid
+			guid: obj.guid,
+			isBranched : obj.isBranched
 		});
 		this.tableView.appendRow(answer);
 		this._rows.push(answer);
@@ -433,6 +454,7 @@ exports.module = (function () {
 				});
 				this.inputContainer.removeAllChildren();
 				this.inputContainer.add(inputControl);
+				helper.animateTop(inputControl); //Animate with slide 
 				break;
 			case "bubble":
 				var btnControl = this._buildButtonControl({
@@ -445,15 +467,18 @@ exports.module = (function () {
 							nxtQsId: option.nextQsId ? option.nextQsId : currQs.nextQsId,
 							src: src,
 							id: currQs.id,
-							guid: updateAnswer.guid
+							guid: updateAnswer.guid,
+							isBranched: currQs.isBranched ? true : false
 						});
 					},
 					help: function () {
 						alert(currQs.help);
 					}
 				});
+				
 				this.inputContainer.removeAllChildren();
 				this.inputContainer.add(btnControl);
+				helper.animateTop(btnControl); //Animate with slide 
 				break;
 			case "picker":
 				var pickerControl = this._buildPickerControl({
@@ -473,6 +498,7 @@ exports.module = (function () {
 				});
 				this.inputContainer.removeAllChildren();
 				this.inputContainer.add(pickerControl);
+				helper.animateTop(pickerControl); //Animate with slide 
 				break;
 			case "info":
 				this._triggerDependentQuestion({
